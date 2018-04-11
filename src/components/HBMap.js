@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 //import ReactDom from 'react-dom';
 import { FetchData } from '../services/FetchData';
 import mapboxgl from 'mapbox-gl';
-import data from '../css/map.geojson';
 
 mapboxgl.accessToken = 'pk.eyJ1IjoibW9ua2V5aW5zdXJnZW5jeSIsImEiOiJjamYzNWZ0dWQwcDlrMnFxeHdsemZhb2EyIn0.IlSSeFKXEW5CNv9uEOZqKw';
 
@@ -29,7 +28,7 @@ class HBMap extends Component {
       fieldies: result.fields
     });
 
-    console.log('bulky', JSON.stringify(this.state.bulk));
+    // console.log('bulky', JSON.stringify(this.state.bulk));
 
   }
   // componentWillMount() {
@@ -93,7 +92,7 @@ class HBMap extends Component {
 
 
 
-    let wholeObj = {
+    /*let wholeObj = {
       type: 'geojson',
       data: {
       type: "FeatureCollection",
@@ -101,7 +100,7 @@ class HBMap extends Component {
       }
     };
 
-    console.log('obj', JSON.stringify(wholeObj));
+    console.log('obj', JSON.stringify(wholeObj));*/
 
     thisMap.on('load', () => {
       thisMap.addSource('fields', {
@@ -135,46 +134,13 @@ class HBMap extends Component {
       });
 
       thisMap.on('click', 'fieldsBoundaries', function (e) {
-        console.log('clicked', e);
-        new mapboxgl.Popup()
-          .setLngLat(e.lngLat)
-          .setHTML(e.features[0].properties.name)
-          .addTo(thisMap);
+        console.log('clicked', e.features[0].properties);
       });
 
 
 
     });
-
-
-    /*for (let field in fields) {
-      this.map.addLayer({
-        'id': field.name,
-        'type': 'fill',
-        'source': {
-          'type': 'geojson',
-          'data': {
-            'type': 'Feature',
-            'geometry': {
-              'type': field.boundary.type.toString(),
-              'coordinates': field.boundary.coordinates[0]
-            }
-          }
-        }
-
-      })
-    }*/
-
-    /*this.map.on('load', () => {
-      this.map.addSource('fields', {
-        type: 'geojson',
-
-
-      })
-    })*/
-
   }
-
 
   render() {
     return (
