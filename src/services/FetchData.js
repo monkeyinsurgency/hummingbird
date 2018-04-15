@@ -36,7 +36,10 @@ const fetchApi = (endPoint, payload = {}, method = 'get', headers = {}) => {
     });
 };
 
-
+const FetchData = () => fetchApi('/farm');
 const FetchCrops = () => fetchApi('/crops');
 
-export const FetchData = () => fetchApi('/farm');
+export {
+  FetchData,
+  FetchCrops
+}

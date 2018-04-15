@@ -1,53 +1,52 @@
 import React, {Component} from 'react';
 //import ReactDom from 'react-dom';
-import { FetchData } from '../services/FetchData';
+import { FetchData, FetchCrops } from '../services/FetchData';
 import mapboxgl from 'mapbox-gl';
+import YieldPanel from "./YieldPanel";
+import CropSelector from "./CropSelector";
 
 mapboxgl.accessToken = 'pk.eyJ1IjoibW9ua2V5aW5zdXJnZW5jeSIsImEiOiJjamYzNWZ0dWQwcDlrMnFxeHdsemZhb2EyIn0.IlSSeFKXEW5CNv9uEOZqKw';
 
 class HBMap extends Component {
-  map;
-  state = {
-    lng: 0,
-    lat: 0
-  };
 
-  originalState;
-
-  constructor(props: Props) {
+  constructor(props) {
     super(props);
+    this.state = {
+      lng: 0,
+      lat: 0
+    };
   }
 
-
-  async getDashData() {
-    const result = await FetchData();
+  async getFarmData() {
+    const farm = await FetchData();
+    console.log('farmy', farm)
     this.setState({
-      lat: parseFloat(result.centre.coordinates[0]),
-      lng: parseFloat(result.centre.coordinates[1]),
-      bulk: result,
-      fieldies: result.fields
+      lat: parseFloat(farm.centre.coordinates[0]),
+      lng: parseFloat(farm.centre.coordinates[1]),
+      bulk: farm,
+      fieldies: farm.fields,
+      currentField: 'Please click on a field.'
     });
-
-    // console.log('bulky', JSON.stringify(this.state.bulk));
-
   }
-  // componentWillMount() {
-  //   console.log('bax');
-  //   this.getDashData();
-  //   console.log('lkhjlk');
-  // }
 
-  /*componentWillMount() {
-    this.getDashData();
+  async getCropData() {
+    const crops = await FetchCrops();
+    console.log('croppyfirst', crops);
   }
-*/
+
+  testingThis = (name) => {
+    this.setState({
+      currentField: name,
+      slappy: 'Slappy'
+    })
+    console.log(this.state);
+  }
+
   async componentDidMount() {
-    await this.getDashData();
-    const { lng, lat, fieldies } = this.state;
+    await this.getFarmData();
+    await this.getCropData();
 
-    //console.log('slappydashy', fieldies);
-
-    //let thisMap = this.map;
+    const { lng, lat, fieldies, currentField } = this.state;
 
     let thisMap = new mapboxgl.Map({
       container: this.mapContainer,
@@ -90,17 +89,13 @@ class HBMap extends Component {
       }
     }
 
+    thisMap.on('click', 'fieldsBoundaries', (e) => {
+
+      let thisName = e.features[0].properties.name;
+      this.testingThis(thisName);
 
 
-    /*let wholeObj = {
-      type: 'geojson',
-      data: {
-      type: "FeatureCollection",
-        features: fields
-      }
-    };
-
-    console.log('obj', JSON.stringify(wholeObj));*/
+    });
 
     thisMap.on('load', () => {
       thisMap.addSource('fields', {
@@ -133,10 +128,6 @@ class HBMap extends Component {
         "filter": ["==", "$type", "Point"],
       });
 
-      thisMap.on('click', 'fieldsBoundaries', function (e) {
-        console.log('clicked', e.features[0].properties);
-      });
-
 
 
     });
@@ -146,6 +137,16 @@ class HBMap extends Component {
     return (
       <div>
         <div ref={el => this.mapContainer = el} className="absolute top right left bottom" />
+        <div className="map-overlay">
+          <div className="map-overlay-inner">
+            <YieldPanel
+              currentField={this.state.currentField}
+            />
+            <CropSelector
+              allCrops={this.state.crop}
+            />
+          </div>
+        </div>
       </div>
     )
   }
