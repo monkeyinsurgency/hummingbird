@@ -24,13 +24,10 @@ class CropSelector extends Component {
 
   handleChange = (selectedOption) => {
     this.setState({ selectedOption });
-    console.log(`Selected: ${selectedOption.label}`);
   };
 
   render() {
     const { selectedOption, croptions } = this.state;
-
-    console.log(croptions);
 
     return (
       <Select

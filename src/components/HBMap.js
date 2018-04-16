@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import { FetchData } from '../services/FetchData';
 import mapboxgl from 'mapbox-gl';
-import YieldPanel from "./YieldPanel";
-import { Camelise } from "../services/Functions";
+import YieldPanel from './YieldPanel';
+import { Camelise } from '../services/Functions';
 
 mapboxgl.accessToken = 'pk.eyJ1IjoibW9ua2V5aW5zdXJnZW5jeSIsImEiOiJjamYzNWZ0dWQwcDlrMnFxeHdsemZhb2EyIn0.IlSSeFKXEW5CNv9uEOZqKw';
 
@@ -21,7 +21,6 @@ class HBMap extends Component {
     this.setState({
       lat: parseFloat(farm.centre.coordinates[0]),
       lng: parseFloat(farm.centre.coordinates[1]),
-      bulk: farm,
       fieldies: farm.fields,
       currentField: 'Please click on a field.'
     });
