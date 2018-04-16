@@ -1,19 +1,20 @@
 import React, { Component } from 'react';
+import CropSelector from './CropSelector';
 
 class YieldPanel extends Component {
 
   constructor(props) {
     super(props);
-    console.log('yieldy', this.props);
-  }
-
-  componentDidMount() {
-    console.log('yieldState', this.state)
   }
 
   render() {
     return (
-      <div>{this.props.currentField}</div>
+      <div>
+        <h2>{this.props.currentField}</h2>
+        <CropSelector
+          currentField={this.props.currentField}
+        />
+      </div>
     );
   }
 }
