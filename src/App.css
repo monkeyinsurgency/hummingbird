@@ -19,3 +19,12 @@
   height: 95vh;
 }
 
+.map-overlay .map-overlay-inner h2  {
+  font-size: 150%;
+}
+
+.crop-list li {
+  cursor: pointer;
+  padding-top: .5em;
+}
+

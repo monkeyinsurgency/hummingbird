@@ -22,14 +22,14 @@ class HBMap extends Component {
       lat: parseFloat(farm.centre.coordinates[0]),
       lng: parseFloat(farm.centre.coordinates[1]),
       fieldies: farm.fields,
-      currentField: 'Please click on a field.'
+      currentField: ''
     });
   }
 
   async componentDidMount() {
     await this.getFarmData();
 
-    const { lng, lat, fieldies, currentField } = this.state;
+    const { lng, lat, fieldies } = this.state;
 
     let thisMap = new mapboxgl.Map({
       container: this.mapContainer,

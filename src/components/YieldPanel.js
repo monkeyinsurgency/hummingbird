@@ -1,22 +1,18 @@
-import React, { Component } from 'react';
+import React from 'react';
 import CropSelector from './CropSelector';
+import Loading from './Loading';
 
-class YieldPanel extends Component {
-
-  constructor(props) {
-    super(props);
-  }
-
-  render() {
-    return (
-      <div>
-        <h2>{this.props.currentField}</h2>
+const YieldPanel = props => (
+    <div>
+      <h2>{props.currentField ? props.currentField : `Please select a field.`}</h2>
+      {!props.currentField ? (
+        <Loading />
+      ) : (
         <CropSelector
-          currentField={this.props.currentField}
+          currentField={props.currentField}
         />
-      </div>
-    );
-  }
-}
+      )}
+    </div>
+);
 
 export default YieldPanel;
