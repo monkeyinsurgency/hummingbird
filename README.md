@@ -12,4 +12,7 @@ To install: `git clone, yarn/npm install, yarn/npm start`.
 * Feed back crop-by-field selections into map and update rendered fields to reflect 
 crop selection
 * Polish UI
-* Get back up to speed on React.  Too much bash automation scripts and Android/Java as of late :anguished: 
+* Get back up to speed on React.  Too much bash automation scripts and Android/Java as of late; made this take a lot 
+ longer than expected :anguished: 
+
+
